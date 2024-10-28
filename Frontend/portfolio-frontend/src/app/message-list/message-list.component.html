@@ -1,0 +1,26 @@
+<div
+  *ngIf="successMessage"
+  class="bg-green-100 text-green-800 p-4 rounded-lg mb-4"
+>
+  {{ successMessage }}
+</div>
+
+<div
+  *ngIf="messages.length; else noMessages"
+  class="p-4 bg-gray-100 rounded-lg shadow-md"
+>
+  <h2 class="text-2xl font-bold mb-4">Messages</h2>
+  <ul class="space-y-4">
+    <li
+      *ngFor="let message of messages"
+      class="p-4 bg-white rounded-lg shadow hover:bg-gray-50 transition"
+    >
+      <p><strong>Name:</strong> {{ message.name }}</p>
+      <p><strong>Email:</strong> {{ message.email }}</p>
+      <p><strong>Message:</strong> {{ message.message }}</p>
+    </li>
+  </ul>
+</div>
+<ng-template #noMessages>
+  <p class="text-gray-500">No messages available.</p>
+</ng-template>
