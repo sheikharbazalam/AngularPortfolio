@@ -27,15 +27,16 @@ export class MessageListComponent implements OnInit {
   }
 
   fetchMessages(): void {
-    this.http.get<Message[]>('http://localhost:5000/messages').subscribe(
-      (data) => {
+    this.http.get<Message[]>('http://127.0.0.1:5000/messages').subscribe({
+      next: (data) => {
         this.messages = data;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching messages:', error);
       }
-    );
+  });
   }
+  
 
   // Method to set success message (optional, depending on your design)
   setSuccessMessage(message: string): void {

@@ -7,8 +7,9 @@ import { AboutComponent } from './app/about/about.component';
 import { ProjectsComponent } from './app/projects/projects.component';
 import { SkillsComponent } from './app/skills/skills.component';
 import { ContactComponent } from './app/contact/contact.component';
-import { HttpClientModule } from '@angular/common/http';
+import {  withInterceptorsFromDi } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { MessageListComponent } from './app/message-list/message-list.component';
 
 // Define routes for each component
 const routes: Route[] = [
@@ -17,12 +18,16 @@ const routes: Route[] = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'skills', component: SkillsComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'message-list', component: MessageListComponent}
 ];
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(withFetch()), // Enable fetch for HttpClient
     provideRouter(routes), 
-    importProvidersFrom(HttpClientModule) // Set up routing
+    provideHttpClient(
+      withInterceptorsFromDi() // Use this if you want to add interceptors
+    ),
+     // Set up routing
   ]
 }).catch((err) => console.error(err));

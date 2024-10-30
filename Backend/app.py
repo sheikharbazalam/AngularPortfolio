@@ -6,6 +6,7 @@ import pymongo
 from config import Config
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
+
 import os
 
 # Load environment variables
@@ -32,9 +33,11 @@ db = client.get_database("portfolioapp")
 projects_collection = db["projects"]
 messages_collection = db["messages"]
 
-# Enable CORS for all routes
 CORS(app)
-CORS(app, resources={r"/projects": {"origins": "http://localhost:4200"}})
+# Enable CORS for all routes
+# CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
+# CORS(app, resources={r"/projects": {"origins": "http://localhost:4200"}})
+# CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
 
 
 @app.route('/')
@@ -65,13 +68,14 @@ def get_projects():
         project["_id"] = str(project["_id"])  # Convert ObjectId to string
     return jsonify(projects)
 
-# POST route to handle contact messages
+# POST route to handle contact messages name email and messages
 
 
 @app.route('/contact', methods=['POST'])
 def contact():
     data = request.get_json()
     if not data or 'name' not in data or 'email' not in data or 'message' not in data:
+        print("Inavlid data received", data)
         return jsonify({'message': 'Invalid data'}), 400
 
     new_message = {
@@ -87,6 +91,10 @@ def contact():
 
 @app.route('/messages', methods=['GET'])
 def get_messages():
+   # messages = Message.query.all()
+    # message_list = [{"name": msg.name, "email": msg.email,
+    #                "message": msg.message} for msg in messages]
+    # return jsonify(message_list), 200
     messages = list(messages_collection.find())
     for message in messages:
         message["_id"] = str(message["_id"])  # Convert ObjectId to string

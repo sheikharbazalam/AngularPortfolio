@@ -17,6 +17,9 @@
     <a (click)="scrollTo('contact')" class="hover:text-blue-400 cursor-pointer"
       >Contact</a
     >
+    <a (click)="scrollTo('messages')" class="hover:text-blue-400 cursor-pointer"
+      >Messages</a
+    >
   </div>
 </nav>
 <app-menubars></app-menubars>
@@ -323,6 +326,10 @@
       Send
     </button>
   </form>
+
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+
+  <app-message-list></app-message-list>
 </section>
 
 <section id="footer">
@@ -371,6 +378,3 @@
     </div>
   </footer>
 </section>
-
-<app-message-list></app-message-list>
-<!-- Include your message list component -->
