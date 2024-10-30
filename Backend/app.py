@@ -17,9 +17,15 @@ app.config.from_object(Config)
 # Initialize MongoDB
 client = pymongo.MongoClient(
     "mongodb+srv://portfolio111:portfolio1@portfolioapp.gx9h9.mongodb.net/?retryWrites=true&w=majority&appName=portfolioapp",
-    # tls=True,  # Use tls instead of ssl
-    # tlsAllowInvalidCertificates=True  # Allow invalid certificates
+    tls=True,  # Use tls instead of ssl
+    tlsAllowInvalidCertificates=True  # Allow invalid certificates
 )
+
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 # Replace "portfolio" with your database name
 db = client.get_database("portfolioapp")
