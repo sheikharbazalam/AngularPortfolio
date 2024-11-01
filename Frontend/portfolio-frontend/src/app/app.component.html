@@ -328,8 +328,14 @@
   </form>
 
   <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
-
-  <app-message-list></app-message-list>
+  <app-navbar></app-navbar>
+  <!--<button
+    {click}="toggleMessageList"
+    class="w-full py-2 bg-blue-600 test-white font-semibold rounded-sm hover:bg-blue-600 transition duration-200"
+  >
+    MessageList
+  </button>
+  <app-message-list *ngIf="showMessage"></app-message-list>-->
 </section>
 
 <section id="footer">

@@ -20,6 +20,7 @@ export class ContactFormComponent {
     this.http.post('http://127.0.0.1:5000/contact', this.contactData).subscribe(
       (response) => {
         console.log('Message sent successfully', response);
+        
         // Optionally reset the form or show a success message here
       },
       (error) => {

@@ -5,16 +5,27 @@ import { MessageListComponent } from './message-list/message-list.component';
 import { CommonModule } from '@angular/common';
 import { MenubarsComponent } from './menubars/menubars.component'; 
 import { NgForm } from '@angular/forms';
+import { NavbarComponent } from './navbar/navbar.component';
+
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  imports: [FormsModule, MessageListComponent,CommonModule,MenubarsComponent],
+  imports: [FormsModule, MessageListComponent,CommonModule,MenubarsComponent, NavbarComponent],
   standalone: true
 })
 export class AppComponent {
   successMessage: string | null = null; // Define successMessage
+
+  showMessage = false;
+
+  
+  toggleMessageList(){
+  this.showMessage = !this.showMessage;
+  }
+
+
 
   //Observable handling error using catchError() and map() for transform or log the response as needed.
 
@@ -54,6 +65,8 @@ onSubmit(contactForm: NgForm) {
       next: (response) => {
         console.log('Success!', response);
         this.successMessage = 'Message sent successfully!';
+        contactForm.reset();
+        
       },
       error: (error) => {
         console.error('Error!', error);

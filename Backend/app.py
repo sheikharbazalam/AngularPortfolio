@@ -1,3 +1,4 @@
+
 import ssl
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -6,6 +7,7 @@ import pymongo
 from config import Config
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo
+from flask_mail import Mail, Message
 
 import os
 
@@ -13,6 +15,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+mail = Mail(app)
 app.config.from_object(Config)
 
 # Initialize MongoDB
@@ -38,6 +41,16 @@ CORS(app)
 # CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
 # CORS(app, resources={r"/projects": {"origins": "http://localhost:4200"}})
 # CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
+
+
+# configuration for Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'thespoof318@gmail.com'
+app.config['MAIL_PASSWORD'] = 'hffn inyd ikgi srsa'
+mail.init_app(app)
 
 
 @app.route('/')
@@ -84,6 +97,20 @@ def contact():
         "message": data["message"]
     }
     messages_collection.insert_one(new_message)
+    # sending email notification
+    try:
+        msg = Message(
+            subject="new Contact form Submission",
+            sender="your-email@gmail.com",
+            reply_to=data['email'],
+            recipients=["thespoof318@gmail.com"],
+            body=f"Name:{data['name']} \nEmail:{data['email']} \nMessage:{data['message']}"
+        )
+        mail.send(msg)
+        print("Notification email sent to you")
+    except Exception as e:
+        print("Error sending email notification:", e)
+        return jsonify({'status': 'error ', 'message': "failed to send notification"}), 500
     return jsonify({"status": "success", "message": "Message stored successfully!"}), 200
 
 # GET route to fetch all messages

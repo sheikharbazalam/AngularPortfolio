@@ -10,6 +10,7 @@ import { ContactComponent } from './app/contact/contact.component';
 import {  withInterceptorsFromDi } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { MessageListComponent } from './app/message-list/message-list.component';
+import { NavbarComponent } from './app/navbar/navbar.component';
 
 // Define routes for each component
 const routes: Route[] = [
