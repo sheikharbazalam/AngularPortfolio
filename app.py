@@ -1,5 +1,6 @@
 import jwt
-from flask_jwt_extended import JWTManager, jwt_required
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
+from datetime import timedelta
 import datetime
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -44,6 +45,8 @@ db = client.get_database("portfolioapp")
 projects_collection = db["projects"]
 messages_collection = db["messages"]
 
+users_collection = db['users']
+
 CORS(app)
 # Enable CORS for all routes
 # CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
@@ -69,6 +72,7 @@ mail.init_app(app)
 app.config['SECRET_KEY'] = os.getenv(
     "SECRET_KEY", "default_fallback_secret_key")
 jwt = JWTManager(app)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 
 class ContactForm(FlaskForm):
@@ -91,7 +95,30 @@ def protected():
 
 # signup
 # sample user stoarge
-users = {}
+
+
+# register to let user new entry
+@app.route('/register', methods=['POST'])
+def register_user():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    # Check if email already exists
+    if users_collection.find_one({"email": email}):
+        return jsonify(message="Email already registered"), 400
+
+    # Hash the password
+    hashed_password = generate_password_hash(password)
+
+    # Store user in MongoDB
+    users_collection.insert_one({
+        "email": email,
+        "password": hashed_password,
+        "created_at": datetime.datetime.utcnow()
+    })
+
+    return jsonify(message="User registered successfully"), 201
 
 
 @app.route('/signup', methods=['POST'])
@@ -100,11 +127,19 @@ def signup():
     email = data.get('email')
     password = data.get('password')
 
-    if email in users:
+    # check if email already exists in the databse
+    existing_user = users_collection.find_one({"email": email})
+
+    if existing_user:
         return jsonify({'message': 'user already exist'}), 409
 
-    hashed_password = generate_password_hash(password, method='sha256')
-    users[email] = {'password': hashed_password}
+    # hashed_password = generate_password_hash(password, method='sha256')
+    hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+    users_collection.insert_one({
+        "email": email,
+        "password": hashed_password
+    })
 
     return jsonify({'message': 'User created successfully'}), 201
 
@@ -114,20 +149,27 @@ def signup():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+
+    if not data or not data.get('email') or not data.get('password'):
+        return jsonify({'message': 'Email and password are required'}), 400
+
     email = data.get('email')
     password = data.get('password')
 
-    user = users.get(email)
+    # Fetch the user from MongoDB using the provided email
+    user = users_collection.find_one({"email": email})
 
     if not user or not check_password_hash(user['password'], password):
-        return jsonify({'message': 'Invalid password or email'}), 401
+        return jsonify({'message': 'Invalid email or password'}), 401
 
-    token = jwt.encode({
-        'user': email,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
-    }, app.config['SECRET_KEY'], algorithm='HS256')
+    # token expiration
+    expires = timedelta(minutes=30)
 
-    return jsonify({"token": token})
+    # Generate JWT token using Flask-JWT-Extended's create_access_token method
+    access_token = create_access_token(identity=email, expires_delta=expires)
+    print(access_token)
+
+    return jsonify({"access_token": access_token})
 
 
 @app.route('/add_test_project', methods=['GET'])
