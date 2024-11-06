@@ -1,0 +1,64 @@
+<section id="contact" class="p-10 bg-white text-center">
+  <h2 class="text-3xl font-semibold mb-4">Contact Me</h2>
+
+  <!-- Success Message -->
+  <div
+    *ngIf="successMessage"
+    class="bg-green-100 text-green-800 p-4 rounded-lg mb-4"
+  >
+    {{ successMessage }}
+  </div>
+
+  <!-- Contact Form -->
+  <form
+    (ngSubmit)="onSubmit(contactForm)"
+    #contactForm="ngForm"
+    class="max-w-xl mx-auto bg-gray-100 p-6 rounded-lg shadow-lg"
+  >
+    <div class="mb-4">
+      <input
+        type="text"
+        name="name"
+        ngModel
+        placeholder="Name"
+        required
+        class="block w-full rounded-md border-0 py-3.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+      />
+    </div>
+    <div class="mb-4">
+      <input
+        type="email"
+        name="email"
+        ngModel
+        placeholder="Email"
+        required
+        class="block w-full rounded-md border-0 py-3.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+      />
+    </div>
+    <div class="mb-4">
+      <textarea
+        name="message"
+        ngModel
+        placeholder="Message"
+        required
+        class="block w-full rounded-md border-0 py-3.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+      ></textarea>
+    </div>
+    <button
+      type="submit"
+      class="w-full py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-200"
+    >
+      Send
+    </button>
+  </form>
+
+  <button
+    class="pb-2 w-full py-2 bg-blue-300 rounded-lg hover:bg-blue-600 duration-200"
+    (click)="toggleMessageList()"
+  >
+    Show Messages
+  </button>
+
+  <!-- Message List Component -->
+  <app-message-list *ngIf="showMessage"></app-message-list>
+</section>

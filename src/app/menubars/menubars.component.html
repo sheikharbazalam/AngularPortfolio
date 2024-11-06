@@ -1,0 +1,39 @@
+<nav class="flex justify-between items-center">
+  <div class="hidden lg:flex fixed flex-col top-[35%] left-0">
+    <ul>
+      <li
+        class="p-5 w-[160px] h-[60px] flex justify-between items-center ml-[-100px] hover:ml-[-10px] duration-300 bg-blue-600"
+      >
+        <a
+          class="flex justify-between items-center w-full text-gray-300"
+          [href]="'mailto:sheikharbazala@gmail.com'"
+        >
+          Email <i class="fas fa-envelope" style="font-size: 30px"></i>
+        </a>
+      </li>
+      <li
+        class="p-5 w-[160px] h-[60px] flex justify-between items-center ml-[-100px] hover:ml-[-10px] duration-300 bg-[#333333]"
+      >
+        <a
+          *ngFor="let social of socials"
+          class="flex flex-column items-center w-full text-gray-300"
+          [href]="social.link"
+        >
+          {{ social.label }}
+          <i [ngClass]="social.icon" style="font-size: 30px"></i>
+        </a>
+      </li>
+
+      <li
+        class="p-5 w-[160px] h-[60px] flex justify-between items-center ml-[-100px] hover:ml-[-10px] duration-300 bg-[#6fc2b0]"
+      >
+        <a
+          class="flex justify-between items-center w-full text-gray-300"
+          [href]="resumeLink"
+        >
+          Resume <i class="fas fa-file" style="font-size: 30px"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
