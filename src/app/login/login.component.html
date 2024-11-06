@@ -1,53 +1,79 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <div>
-      <label for="email">Email</label>
-      <input
-        id="email"
-        formControlName="email"
-        type="email"
-        placeholder="Enter your email"
-      />
-      <div
-        *ngIf="
-          loginForm.controls['email'].invalid &&
-          loginForm.controls['email'].touched
-        "
-      >
-        <small *ngIf="loginForm.controls['email'].errors?.['required']"
-          >Email is required</small
+<div
+  class="login-container flex items-center justify-center min-h-screen bg-gray-100 p-4"
+>
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+    <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <!-- Email input -->
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 font-medium mb-2"
+          >Email</label
         >
-        <small *ngIf="loginForm.controls['email'].errors?.['email']"
-          >Enter a valid email</small
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          placeholder="Enter your email"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['email'].invalid &&
+            loginForm.controls['email'].touched
+          "
+          class="text-red-500 text-sm mt-1"
         >
+          <small *ngIf="loginForm.controls['email'].errors?.['required']">
+            Email is required
+          </small>
+          <small *ngIf="loginForm.controls['email'].errors?.['email']">
+            Enter a valid email
+          </small>
+        </div>
       </div>
-    </div>
 
-    <div>
-      <label for="password">Password</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        placeholder="Enter your password"
-      />
-      <div
-        *ngIf="
-          loginForm.controls['password'].invalid &&
-          loginForm.controls['password'].touched
-        "
-      >
-        <small *ngIf="loginForm.controls['password'].errors?.['required']"
-          >Password is required</small
+      <!-- Password input -->
+      <div class="mb-6">
+        <label for="password" class="block text-gray-700 font-medium mb-2"
+          >Password</label
         >
-        <small *ngIf="loginForm.controls['password'].errors?.['minlength']"
-          >Password must be at least 6 characters</small
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Enter your password"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <div
+          *ngIf="
+            loginForm.controls['password'].invalid &&
+            loginForm.controls['password'].touched
+          "
+          class="text-red-500 text-sm mt-1"
         >
+          <small *ngIf="loginForm.controls['password'].errors?.['required']">
+            Password is required
+          </small>
+          <small *ngIf="loginForm.controls['password'].errors?.['minlength']">
+            Password must be at least 6 characters
+          </small>
+        </div>
       </div>
-    </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
-  <p>Don’t have an account? <a routerLink="/signup">Sign up here</a></p>
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:bg-gray-400"
+      >
+        Login
+      </button>
+    </form>
+    <p class="mt-4 text-center text-gray-600">
+      Don’t have an account?
+      <a routerLink="/signup" class="text-indigo-600 hover:text-indigo-700"
+        >Sign up here</a
+      >
+    </p>
+  </div>
 </div>

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MessageListComponent } from '../message-list/message-list.component';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router'; 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MessageListComponent],
+  imports: [CommonModule, MessageListComponent,RouterModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })

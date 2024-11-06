@@ -11,6 +11,7 @@ interface Message {
 
 @Component({
   selector: 'app-message-list',
+  host: { '[attr.data-id]': '"message-list-unique"' },
   standalone: true,
   imports: [CommonModule], // Register CommonModule here
   templateUrl: './message-list.component.html',

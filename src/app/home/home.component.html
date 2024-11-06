@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div *ngIf="isAuthenticated; else notAuthenticated">
+  <h1>Welcome to the Home Page!</h1>
+  <p>You are logged in and can access all the features.</p>
+
+  <button (click)="onLogout()">Logout</button>
+
+  <!-- Navigation to other routes -->
+  <app-navbar></app-navbar>
+  <app-about></app-about>
+  
+  <app-contact></app-contact>
+  
+  
+</div>
+
+<ng-template #notAuthenticated>
+  <h1>Please log in to access this page</h1>
+  <a routerLink="/login">Login</a>
+</ng-template>

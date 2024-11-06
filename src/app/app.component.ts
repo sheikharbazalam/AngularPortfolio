@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { HeroComponent } from './hero/hero.component';
+
 import { AboutComponent } from './about/about.component';
 import { SkillsComponent } from './skills/skills.component';
 import { ProjectListComponent } from './project-list/project-list.component';
@@ -18,11 +18,12 @@ import { ProjectListComponent } from './project-list/project-list.component';
 //import { ProjectsComponent } from './projects/projects.component';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
+import { HomeComponent } from './home/home.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  imports: [ContactComponent,FooterComponent,ContactComponent,ProjectListComponent,SkillsComponent,AboutComponent,HeroComponent, FormsModule, MessageListComponent,CommonModule,MenubarsComponent, NavbarComponent,RouterModule],
+  imports: [FooterComponent,ContactComponent,ProjectListComponent,SkillsComponent,AboutComponent, FormsModule, MessageListComponent,CommonModule,MenubarsComponent, NavbarComponent,RouterModule,HomeComponent],
   standalone: true,
  
 

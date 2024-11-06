@@ -13,12 +13,15 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): boolean {
     const token = localStorage.getItem('token');
+    console.log(localStorage);
     
     // If no token found or token is expired, redirect to login
     if (!token || this.isTokenExpired(token)) {
+      console.log("console log forces")
       this.router.navigate(['/login']);
       return false;
     }
+    console.log("hello");
     return true;
   }
 

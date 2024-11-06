@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';  // Import RouterModule
-import { AuthService } from '../auth.service'; 
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, RouterModule], // Ensure RouterModule is imported here
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
 })
 export class LoginComponent {
   loginForm: FormGroup;
@@ -31,12 +31,18 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.authService.login(email, password).subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);  // Store token in local storage
-          this.router.navigate(['/home']);  // Redirect to home after login
+          console.log('Login successful:', response);
+          localStorage.setItem('token', response.access_token);  // Store token in local storage
+           console.log('Navigating to /home...');
+          this.router.navigateByUrl('/home'); // Redirect to home after login
         },
         error: (err) => {
           console.error('Login error:', err);
-          this.loginError = 'Invalid email or password';  // Show login error
+          if (err.status === 401) {
+            this.loginError = 'Invalid email or password';  // Show specific error message
+          } else {
+            this.loginError = 'An error occurred. Please try again later.';
+          }
         },
       });
     }
