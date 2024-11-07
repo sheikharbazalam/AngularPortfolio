@@ -30,7 +30,11 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 set -gx VIRTUAL_ENV "/Users/skarbazalam/Desktop/Portfolio_Project/.venv"
+=======
+set -gx VIRTUAL_ENV "/Users/skarbazalam/Desktop/Portfolio_Project/Backend/.venv"
+>>>>>>> c13ed28 (login and signup endpoint authenticated)
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

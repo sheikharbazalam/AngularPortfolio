@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/Users/skarbazalam/Desktop/Portfolio_Project/.venv/bin/python3
+=======
+#!/Users/skarbazalam/Desktop/Portfolio_Project/Backend/.venv/bin/python3.11
+>>>>>>> c13ed28 (login and signup endpoint authenticated)
 # -*- coding: utf-8 -*-
 import re
 import sys

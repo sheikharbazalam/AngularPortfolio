@@ -8,7 +8,11 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
+<<<<<<< HEAD
 setenv VIRTUAL_ENV "/Users/skarbazalam/Desktop/Portfolio_Project/.venv"
+=======
+setenv VIRTUAL_ENV "/Users/skarbazalam/Desktop/Portfolio_Project/Backend/.venv"
+>>>>>>> c13ed28 (login and signup endpoint authenticated)
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

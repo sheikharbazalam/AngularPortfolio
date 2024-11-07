@@ -25,6 +25,8 @@ load_dotenv()
 app = Flask(__name__)
 mail = Mail(app)
 app.config.from_object(Config)
+app.config['WTF_CSRF_ENABLED'] = False
+
 
 mongo_uri = os.getenv('MONGO_URI')
 # Initialize MongoDB
@@ -40,7 +42,7 @@ try:
 except Exception as e:
     print(e)
 
-# Replace "portfolio" with your database name
+
 db = client.get_database("portfolioapp")
 projects_collection = db["projects"]
 messages_collection = db["messages"]
@@ -48,12 +50,6 @@ messages_collection = db["messages"]
 users_collection = db['users']
 
 CORS(app)
-# Enable CORS for all routes
-# CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
-# CORS(app, resources={r"/projects": {"origins": "http://localhost:4200"}})
-# CORS(app, resources={r"/contact": {"origins": "http://localhost:4200"}})
-
-# mail_password = MAIL_PASSWORD
 # configuration for Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -62,9 +58,6 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'thespoof318@gmail.com'
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 mail.init_app(app)
-
-# datetime feature i message when user will send message we can see the date and tike of the sending messages by the sue on the UI
-# timestamp = datetime.now().strftime("%Y-%M-%d %H-%M-%S")
 
 
 # secret key JWT
@@ -76,8 +69,14 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 
 
 class ContactForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Regexp(
-        r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$', message='please enter a valid email address')])
+    class Meta:
+        csrf = False  # Disable CSRF protection for JSON requests
+
+    email = StringField('Email', validators=[
+        DataRequired(),
+        Regexp(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$',
+               message='Please enter a valid email address')
+    ])
 
 
 @app.route('/')
@@ -91,11 +90,6 @@ def protected():
     return jsonify(message="this is a protected route"), 200
 
 # Route to add a test project
-
-
-# signup
-# sample user stoarge
-
 
 # register to let user new entry
 @app.route('/register', methods=['POST'])
