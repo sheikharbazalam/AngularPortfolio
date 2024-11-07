@@ -1,0 +1,44 @@
+/* Ensure the container takes full viewport height */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Make the individual sections stretch properly */
+app-navbar,
+app-menubars,
+app-about,
+app-project-list,
+app-skills,
+app-contact,
+app-footer {
+  width: 100%;
+}
+
+/* Optionally add some space between components */
+app-navbar,
+app-menubars,
+app-about,
+app-project-list,
+app-skills,
+app-contact,
+app-footer {
+  margin-bottom: 20px; /* Adjust based on preference */
+}
+
+/* Ensure the footer stays at the bottom when content is shorter */
+main {
+  flex-grow: 1; /* This makes the main content stretch to take available space */
+}
+
+/* Optional styles for making sure content fits nicely */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-top: 20px;
+}

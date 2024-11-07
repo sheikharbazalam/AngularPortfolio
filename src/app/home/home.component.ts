@@ -4,12 +4,18 @@ import { AuthService } from '../auth.service'; // Import your auth service
 import { NavbarComponent } from '../navbar/navbar.component'; 
 import { AboutComponent } from '../about/about.component';
 import { ContactComponent } from '../contact/contact.component';
+import { SkillsComponent } from '../skills/skills.component';
+import { ProjectListComponent } from '../project-list/project-list.component';
+import { FooterComponent } from '../footer/footer.component';
+import { RouterModule } from '@angular/router';
+import { MenubarsComponent } from '../menubars/menubars.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   standalone: true, // Since it's a standalone component
-  imports: [CommonModule,NavbarComponent,AboutComponent,ContactComponent] // <-- Add CommonModule here
+  imports: [MenubarsComponent,RouterModule,CommonModule,NavbarComponent,AboutComponent,ContactComponent,SkillsComponent,ProjectListComponent, FooterComponent] // <-- Add CommonModule here
 })
 export class HomeComponent implements OnInit {
   isAuthenticated: boolean = false;
@@ -21,7 +27,8 @@ export class HomeComponent implements OnInit {
   }
 
   // Optional: Logout functionality
-  onLogout(): void {
-    this.authService.logout();
+  onLogout() {
+    this.authService.logout();  // Call the logout method in AuthService
+    this.isAuthenticated = false;  // Set isAuthenticated to false
   }
 }
