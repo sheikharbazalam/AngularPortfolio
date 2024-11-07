@@ -1,0 +1,4 @@
+a {
+  cursor: pointer;
+  text-decoration: underline; /* Optional: Adds underline to make it look like a link */
+}
